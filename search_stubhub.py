@@ -5,15 +5,19 @@ from convert_url import convert_url
 from find_perfect_match import find_perfect_match
 from get_ticket_list import get_ticket_list
 
-#url='https://www.stubhub.com/olivia-rodrigo-new-york-tickets-4-26-2022/event/105133478/'
-#url='https://www.stubhub.com/billie-eilish-boston-tickets-2-20-2022/event/104853773/'
+def search_stubhub():
 
-print(sys.argv)
-url = sys.argv[1]
-soup, driver = convert_url(url)
+    url='https://www.stubhub.com/olivia-rodrigo-new-york-tickets-4-26-2022/event/105133478/'
+    #url='https://www.stubhub.com/billie-eilish-boston-tickets-2-20-2022/event/104853773/'
 
-tickets = get_ticket_list(soup)
+    #print(sys.argv)
+    #url = sys.argv[1]
+    soup, driver = convert_url(url)
 
-tickets = clean_tickets_list(tickets)
+    tickets = get_ticket_list(soup)
 
-print(find_perfect_match('3rd Mezzanine 4', 'D', 1, 700, driver, tickets))
+    tickets = clean_tickets_list(tickets)
+
+    return find_perfect_match('3rd Mezzanine 4', 'D', 1, 700, driver, tickets)
+
+search_stubhub()
