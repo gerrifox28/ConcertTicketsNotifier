@@ -1,5 +1,6 @@
 def find_filtered_matches(tickets, filters, driver, all=True):
     matches = []
+    urls = []
     for ticket in tickets: 
         match = 0
         added = False
@@ -21,6 +22,7 @@ def find_filtered_matches(tickets, filters, driver, all=True):
                     url = driver.current_url
                     ticket['url'] = url
                     driver.execute_script("window.history.go(-1)")
+                    urls.append(url)
                     matches.append(ticket)
                     added = True
         if all and match == len(filters): 
@@ -30,5 +32,6 @@ def find_filtered_matches(tickets, filters, driver, all=True):
             url = driver.current_url
             ticket['url'] = url
             driver.execute_script("window.history.go(-1)")
+            urls.append(url)
             matches.append(ticket)
-    return matches
+    return matches, urls
