@@ -1,4 +1,4 @@
-from find_filtered_matches import find_filtered_matches
+from service.find_filtered_matches import find_filtered_matches
 
 
 def find_perfect_match(section, row, num_tickets, price, driver, tickets):
