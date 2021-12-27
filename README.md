@@ -1,5 +1,5 @@
-# searchstubhub
+# Search Stubhub
 
-A Chrome web scraper Flask API built using Python and Selenium that when given search inputs to Stubhub and filters for tickets, searches the top stubhub event and flags tickets that match the user's preferences. 
+Easily search for your perfect ticket to the Stubhub event you've been tracking.
 
-Saves the user from having to scroll through Stubhub infinitely themselves looking for their perfect ticket having their exact price point, location, and quantity. 
+A Chrome web scraper Flask API built using Python and Selenium that when given search inputs to Stubhub and filters for tickets, searches the top stubhub event and returns/openslinks to their perfect tickets having the exact inputted price point, location and quantity. 
