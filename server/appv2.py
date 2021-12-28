@@ -19,7 +19,7 @@ def get_event_url_from_search():
     soup = BeautifulSoup(html)
 
     events = soup.findAll('div', class_='EventRedirection')
-    if result_num > len(events):
+    if result_num >= len(events):
         return "No More Events Found"
     if events[result_num] is None:
         return "No Events Found"

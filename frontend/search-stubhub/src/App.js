@@ -1,23 +1,152 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+const App = () => {
+
+  const [event, setEvent] = useState();
+  const [date, setDate] = useState();
+  const [city, setCity] = useState();
+  const [url, setUrl] = useState();
+  const [resultNum, setResultNum] = useState(0);
+  const [correctUrl, setCorrectUrl] = useState(false);
+  const [section, setSection] = useState();
+  const [row, setRow] = useState();
+  const [numTickets, setNumTickets] = useState();
+  const [price, setPrice] = useState('');
+  const [all, setAll] = useState(true);
+  const [openUrl, setOpenUrl] = useState(false);
+  const [disabledUrl, setDisabledUrl] = useState(true);
+  const [disabledTicket, setDisabledTicket] = useState(true);
+  const [urlList, setUrlList] = useState();
+
+  const handleEventChange = (event) => {
+   setEvent(event.target.value);
+   setDisabledUrl(false);
+  }
+
+  const handleDateChange = (event) => {
+    setDate(event.target.value);
+    setDisabledUrl(false);
+   }
+
+   const handleCityChange = (event) => {
+    setCity(event.target.value);
+    setDisabledUrl(false);
+   }
+
+   const handleSectionChange = (event) => {
+    setSection(event.target.value);
+    setDisabledTicket(false)
+   }
+
+   const handleRowChange = (event) => {
+    setRow(event.target.value);
+    setDisabledTicket(false)
+   }
+
+   const handleNumTicketsChange = (event) => {
+    setNumTickets(event.target.value);
+    setDisabledTicket(false)
+   }
+
+   const handlePriceChange = (event) => {
+    setPrice(event.target.value);
+    setDisabledTicket(false)
+    
+   }
+
+   const handleAllChange = (event) => {
+    setAll(event.target.value);
+   }
+
+   const handleOpenUrlChange = (event) => {
+    setOpenUrl(event.target.value);
+   }
+
+  const handleSubmitUrlSearch = (input) => {
+    if (event && date && city) {
+      alert('Event info was submitted: ' + event + ', ' + date + ', ' + city);
+      input && input.preventDefault();
+      //send request to search for url
+      setUrl("https://www.stubhub.com/olivia-rodrigo-new-york-tickets-4-26-2022/event/105133478/")
+    } else {
+      alert('Please input all search fields and resubmit')
+      input.preventDefault();
+    }
+  }
+
+  const handleSubmitTicketSearch = (input) => {
+    //send request to search for tickets
+    alert('Ticket info was submitted: ' + section + ', ' + row + ', ' + numTickets + ', ' + price + ', ' + all + ', ' + openUrl);
+    input.preventDefault();
+    //setmatchesurllist from response
+    setUrlList('http, https, .com')
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form onSubmit={handleSubmitUrlSearch}>
+        <label>
+          Event:
+          <input type="text" value={event} onChange={handleEventChange} />
+        </label>
+        <label>
+          Date:
+          <input type="text" value={date} onChange={handleDateChange} />
+        </label>
+        <label>
+          City:
+          <input type="text" value={city} onChange={handleCityChange} />
+        </label>
+        <input type="submit" value="Submit" disabled={disabledUrl}/>
+      </form>
+    {url && 
+      <div>Is this the event you are looking for? {url}
+      <button onClick={() => setCorrectUrl(true)}>Yes</button>
+      <button onClick={() => {
+        setResultNum(resultNum+1);
+        setUrl('');
+        console.log(url);
+        <div>Retrieving next Url</div>
+        handleSubmitUrlSearch()
+        console.log(url);
+        //recall handleSubmit to get new url
+      }}>No</button>
+      </div>}
+      {correctUrl && 
+      <div> 
+        <form onSubmit={handleSubmitTicketSearch}>
+        <label>
+          Section:
+          <input type="text" value={section} onChange={handleSectionChange} />
+        </label>
+        <label>
+          Row:
+          <input type="text" value={row} onChange={handleRowChange} />
+        </label>
+        <label>
+          Number of Tickets:
+          <input type="text" value={numTickets} onChange={handleNumTicketsChange} />
+        </label>
+        <label>
+         Price:
+          <input type="text" value={'$' + price} onChange={handlePriceChange} />
+        </label>
+        <label>
+          Apply all inputted filters:
+          <input type="text" value={all} onChange={handleAllChange} />
+        </label>
+        <label>
+         Open matched ticket urls:
+          <input type="text" value={openUrl} onChange={handleOpenUrlChange} />
+        </label>
+        <input type="submit" value="Submit" disabled={disabledTicket} />
+      </form>
+      </div>}
+    {urlList && 
+      <div>Matches Found: {urlList}
+      </div>}
+
     </div>
   );
 }
