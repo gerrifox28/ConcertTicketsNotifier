@@ -19,19 +19,22 @@ const App = () => {
   const [disabledTicket, setDisabledTicket] = useState(true);
   const [urlList, setUrlList] = useState();
 
-  const handleEventChange = (event) => {
-   setEvent(event.target.value);
-   setDisabledUrl(false);
+  const handleEventChange = (input) => {
+   setEvent(input.target.value);
+   if (input.target.value) setDisabledUrl(false);
+   else if(!date && !city) setDisabledUrl(true);
   }
 
-  const handleDateChange = (event) => {
-    setDate(event.target.value);
-    setDisabledUrl(false);
+  const handleDateChange = (input) => {
+    setDate(input.target.value);
+    if (input.target.value) setDisabledUrl(false);
+    else if(!event && !city) setDisabledUrl(true);
    }
 
-   const handleCityChange = (event) => {
-    setCity(event.target.value);
-    setDisabledUrl(false);
+   const handleCityChange = (input) => {
+    setCity(input.target.value);
+    if (input.target.value) setDisabledUrl(false);
+    else if(!event && !date) setDisabledUrl(true);
    }
 
    const handleSectionChange = (event) => {
@@ -50,7 +53,7 @@ const App = () => {
    }
 
    const handlePriceChange = (event) => {
-    setPrice(event.target.value);
+    setPrice(event.target.value.replace('$', ''));
     setDisabledTicket(false)
     
    }
@@ -88,15 +91,15 @@ const App = () => {
       <form onSubmit={handleSubmitUrlSearch}>
         <label>
           Event:
-          <input type="text" value={event} onChange={handleEventChange} />
+          <input type="text" value={event} defaultValue={event || ''} onChange={handleEventChange} />
         </label>
         <label>
           Date:
-          <input type="text" value={date} onChange={handleDateChange} />
+          <input type="text" value={date} defaultValue={date || ''} onChange={handleDateChange} />
         </label>
         <label>
           City:
-          <input type="text" value={city} onChange={handleCityChange} />
+          <input type="text" value={city} defaultValue={city || ''} onChange={handleCityChange} />
         </label>
         <input type="submit" value="Submit" disabled={disabledUrl}/>
       </form>
@@ -118,19 +121,19 @@ const App = () => {
         <form onSubmit={handleSubmitTicketSearch}>
         <label>
           Section:
-          <input type="text" value={section} onChange={handleSectionChange} />
+          <input type="text" value={section} defaultValue={section || ''} onChange={handleSectionChange} />
         </label>
         <label>
           Row:
-          <input type="text" value={row} onChange={handleRowChange} />
+          <input type="text" value={row} defaultValue={row || ''} onChange={handleRowChange} />
         </label>
         <label>
           Number of Tickets:
-          <input type="text" value={numTickets} onChange={handleNumTicketsChange} />
+          <input type="text" value={numTickets} defaultValue={numTickets || ''} onChange={handleNumTicketsChange} />
         </label>
         <label>
          Price:
-          <input type="text" value={'$' + price} onChange={handlePriceChange} />
+          <input type="text" value={'$' + price} defaultValue={price || '$'} onChange={handlePriceChange} />
         </label>
         <label>
           Apply all inputted filters:
